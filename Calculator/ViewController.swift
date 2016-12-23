@@ -19,6 +19,32 @@ class ViewController: UIViewController {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
 	}
-
-
+	
+	var userIsInMiddleOfTyping = false
+	
+	@IBOutlet weak var display: UILabel!
+	
+	@IBAction func touchDigit(_ sender: UIButton) {
+		let digit = sender.currentTitle!
+		print("Digit \(digit) pressed.")
+		
+		if userIsInMiddleOfTyping {
+			let textCurrentlyOnDisplay = display.text!
+			display.text = textCurrentlyOnDisplay + digit
+		} else {
+			display.text = digit;
+		}
+		
+		userIsInMiddleOfTyping = true;
+	}
+	
+	@IBAction func performOperation(_ sender: UIButton) {
+		userIsInMiddleOfTyping = false;
+		
+		if let mathematicalSymbol = sender.currentTitle {
+			if mathematicalSymbol == "π" {
+				display.text = String(M_PI)
+			}
+		}
+	}
 }
