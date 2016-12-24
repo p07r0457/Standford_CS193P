@@ -37,10 +37,16 @@ class ViewController: UIViewController {
 	
 	@IBAction private func touchDigit(_ sender: UIButton) {
 		let digit = sender.currentTitle!
+		
 		print("Digit \(digit) pressed.")
 		
 		if userIsInMiddleOfTyping {
 			let textCurrentlyOnDisplay = display.text!
+			
+			if digit == "." && textCurrentlyOnDisplay.range(of: ".") != nil {
+				return
+			}
+			
 			display.text = textCurrentlyOnDisplay + digit
 		} else {
 			display.text = digit;
@@ -50,14 +56,16 @@ class ViewController: UIViewController {
 	}
 	
 	@IBAction private func performOperation(_ sender: UIButton) {
+		let mathematicalSymbol = sender.currentTitle!
+		
+		print("Operation \(mathematicalSymbol) pressed.")
+		
 		if (userIsInMiddleOfTyping) {
 			brain.setOperand(operand: displayValue)
 			userIsInMiddleOfTyping = false;
 		}
 		
-		if let mathematicalSymbol = sender.currentTitle {
-			brain.performOperation(mathematicalSymbol)
-		}
+		brain.performOperation(mathematicalSymbol)
 		
 		displayValue = brain.result;
 	}
