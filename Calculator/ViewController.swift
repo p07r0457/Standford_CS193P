@@ -41,7 +41,7 @@ class ViewController: UIViewController {
 			var value = newValue
 			
 			if brain.isPartialResult { value += "..." }
-			else { value += "=" }
+			else if value.characters.count > 0 { value += "=" }
 			
 			if value.characters.count == 0 { value += " " }
 			
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
 		
 		brain.clear()
 		
-		displayValue = 0.0
+		displayValue = 0
 		historyValue = String()
 	}
 	
