@@ -8,24 +8,29 @@
 
 import UIKit
 
+/// View Controller for main calculator Ui.
 class ViewController: UIViewController {
 	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
-	}
-	
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-		// Dispose of any resources that can be recreated.
-	}
-	
-	private var brain = CalculatorBrain()
-	
+	/// The default display value.
 	let defaultDisplayValue = "0"
 	
+	/// Outlet for display label on Ui
+	@IBOutlet private weak var display: UILabel!
+	
+	/// Outlet for history label on Ui
+	@IBOutlet weak var history: UILabel!
+	
+	/// The calculator brain instance.
+	private var brain = CalculatorBrain()
+	
+	/// Is the user in the middle of typing a value?
 	private var userIsInMiddleOfTyping = false
 	
+	/// The display value.
+	///
+	/// When getting, the display text is cast to a Double and returned.
+	///
+	/// When setting, a Double is formatted and then displayed on the Ui.
 	private var displayValue: Double? {
 		get {
 			return Double(display.text!)
@@ -40,6 +45,11 @@ class ViewController: UIViewController {
 		}
 	}
 	
+	/// The history of the calculation.
+	///
+	/// When getting, the history is returned as a String.
+	///
+	/// When setting, the history is built and indicators such as "..." and "=" are appended, as appropriate.
 	private var historyValue: String {
 		get {
 			return history.text!
@@ -56,9 +66,9 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	@IBOutlet private weak var display: UILabel!
-	@IBOutlet weak var history: UILabel!
-	
+	/// Action for the Clear button on the Ui
+	///
+	/// Resets the calculator as-if a fresh instance was just launched.
 	@IBAction func clear(_ sender: UIButton) {
 		print("Clear pressed.")
 		
@@ -68,6 +78,9 @@ class ViewController: UIViewController {
 		historyValue = String()
 	}
 	
+	/// Action for the Backspace button on the Ui.
+	///
+	/// Allows the user to correct mistakes when entering values.
 	@IBAction func backspace(_ sender: UIButton) {
 		var value = display.text!
 		
@@ -78,6 +91,9 @@ class ViewController: UIViewController {
 		display.text = value
 	}
 	
+	/// Action for a digit button on the Ui.
+	///
+	/// Updates state when user is in the middle of typing a value and updates the display.
 	@IBAction private func touchDigit(_ sender: UIButton) {
 		let digit = sender.currentTitle!
 		
@@ -98,6 +114,9 @@ class ViewController: UIViewController {
 		userIsInMiddleOfTyping = true;
 	}
 	
+	/// Action for an operation button on the Ui.
+	///
+	/// Performs the calculation and updates the display and history labels.
 	@IBAction private func performOperation(_ sender: UIButton) {
 		let mathematicalSymbol = sender.currentTitle!
 		
