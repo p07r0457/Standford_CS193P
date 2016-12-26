@@ -22,14 +22,21 @@ class ViewController: UIViewController {
 	
 	private var brain = CalculatorBrain()
 	
+	let defaultDisplayValue = "0"
+	
 	private var userIsInMiddleOfTyping = false
 	
-	private var displayValue: Double {
+	private var displayValue: Double? {
 		get {
-			return Double(display.text!)!
+			return Double(display.text!)
 		}
 		set {
-			display.text = String(newValue)
+			if newValue != nil {
+				display.text = String(newValue!)
+			}
+			else {
+				display.text = defaultDisplayValue
+			}
 		}
 	}
 	
@@ -67,7 +74,7 @@ class ViewController: UIViewController {
 		let index = value.index(value.startIndex, offsetBy: value.characters.count - 1)
 		value = value.substring(to: index)
 		
-		if value.characters.count == 0 { value = "0" }
+		if value.characters.count == 0 { value = defaultDisplayValue }
 		display.text = value
 	}
 	
@@ -97,7 +104,7 @@ class ViewController: UIViewController {
 		print("Operation \(mathematicalSymbol) pressed.")
 		
 		if (userIsInMiddleOfTyping) {
-			brain.setOperand(operand: displayValue)
+			brain.setOperand(operand: displayValue!)
 			userIsInMiddleOfTyping = false;
 		}
 		
