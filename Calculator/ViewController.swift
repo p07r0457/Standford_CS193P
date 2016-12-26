@@ -33,24 +33,27 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	private var history: String {
+	private var historyValue: String {
 		get {
-			return historyLabel.text!
+			return history.text!
 		}
 		set {
 			var value = newValue
 			if value.characters.count == 0 { value += " " }
-			historyLabel.text = value
+			history.text = value
 		}
 	}
 	
 	@IBOutlet private weak var display: UILabel!
-	@IBOutlet weak var historyLabel: UILabel!
+	@IBOutlet weak var history: UILabel!
 	
 	@IBAction func clear(_ sender: UIButton) {
+		print("Clear pressed.")
+		
 		brain.clear()
+		
 		displayValue = 0.0
-		history = String()
+		historyValue = String()
 	}
 	
 	@IBAction private func touchDigit(_ sender: UIButton) {
@@ -86,6 +89,6 @@ class ViewController: UIViewController {
 		brain.performOperation(mathematicalSymbol)
 		
 		displayValue = brain.result
-		history += "yep"
+		historyValue = brain.history
 	}
 }

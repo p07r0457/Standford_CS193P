@@ -35,6 +35,8 @@ class CalculatorBrain {
 	}
 	
 	private var accumulator = 0.0
+	private var equationHistory = String()
+	private var currentOperandSegment = String()
 	
 	func clear() {
 		accumulator = 0.0
@@ -73,6 +75,12 @@ class CalculatorBrain {
 	private struct PendingBinaryOperationInfo {
 		var binaryFunction: (Double, Double) -> Double
 		var firstOperand: Double
+	}
+	
+	var history: String {
+		get {
+			return equationHistory + currentOperandSegment
+		}
 	}
 	
 	var result: Double {
