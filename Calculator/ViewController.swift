@@ -35,6 +35,11 @@ class ViewController: UIViewController {
 	
 	@IBOutlet private weak var display: UILabel!
 	
+	@IBAction func clear(_ sender: UIButton) {
+		brain.clear()
+		displayValue = 0.0
+	}
+	
 	@IBAction private func touchDigit(_ sender: UIButton) {
 		let digit = sender.currentTitle!
 		

@@ -36,6 +36,11 @@ class CalculatorBrain {
 	
 	private var accumulator = 0.0
 	
+	func clear() {
+		accumulator = 0.0
+		pending = nil
+	}
+	
 	func setOperand(operand: Double) {
 		accumulator = operand
 	}
