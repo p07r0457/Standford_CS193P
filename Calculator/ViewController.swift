@@ -39,7 +39,12 @@ class ViewController: UIViewController {
 		}
 		set {
 			var value = newValue
+			
+			if brain.isPartialResult { value += "..." }
+			else { value += "=" }
+			
 			if value.characters.count == 0 { value += " " }
+			
 			history.text = value
 		}
 	}

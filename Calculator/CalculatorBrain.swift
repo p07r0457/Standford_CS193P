@@ -37,6 +37,7 @@ class CalculatorBrain {
 	private var accumulator = 0.0
 	private var equationHistory = String()
 	private var currentOperandSegment = String()
+	private var isOperationPending = false
 	
 	func clear() {
 		accumulator = 0.0
@@ -45,10 +46,13 @@ class CalculatorBrain {
 	
 	func setOperand(operand: Double) {
 		accumulator = operand
+		currentOperandSegment = String(operand)
 	}
 	
 	func performOperation(_ symbol: String) {
 		if let operation = operations[symbol] {
+			isOperationPending = true
+			
 			switch operation {
 			case .Constant(let value):
 				accumulator = value
@@ -57,9 +61,14 @@ class CalculatorBrain {
 			case .BinaryOperation(let function):
 				executePendingBinaryOperation()
 				pending = PendingBinaryOperationInfo(binaryFunction: function, firstOperand: accumulator)
+				currentOperandSegment += symbol
 			case .Equals:
 				executePendingBinaryOperation()
+				isOperationPending = false
 			}
+			
+			equationHistory += currentOperandSegment
+			currentOperandSegment = String()
 		}
 	}
 	
@@ -75,6 +84,12 @@ class CalculatorBrain {
 	private struct PendingBinaryOperationInfo {
 		var binaryFunction: (Double, Double) -> Double
 		var firstOperand: Double
+	}
+	
+	var isPartialResult: Bool {
+		get {
+			return isOperationPending
+		}
 	}
 	
 	var history: String {
