@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 		}
 		set {
 			if newValue != nil {
-				display.text = String(newValue!)
+				display.text = brain.formatForDisplay(newValue)
 			}
 			else {
 				display.text = defaultDisplayValue

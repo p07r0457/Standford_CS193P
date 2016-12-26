@@ -47,13 +47,23 @@ class CalculatorBrain {
 		currentOperandSegment = String()
 	}
 	
+	func formatForDisplay(_ value: Double?) -> String! {
+		if value == nil { return nil }
+		
+		let formatter = NumberFormatter()
+		formatter.numberStyle = .decimal
+		formatter.roundingMode = .halfUp
+		formatter.maximumFractionDigits = 6
+		return formatter.string(from: NSNumber(value: value!))!
+	}
+	
 	func setOperand(operand: Double) {
 		lastOperand = operand
 		accumulator = operand
 		
 		if pending == nil { equationHistory = String() }
 		
-		currentOperandSegment = String(operand)
+		currentOperandSegment = formatForDisplay(operand)
 	}
 	
 	func performOperation(_ symbol: String) {
@@ -86,7 +96,7 @@ class CalculatorBrain {
 				
 			case .Equals:
 				executePendingBinaryOperation()
-				if wasLastActionABinaryOperation { currentOperandSegment = String(lastOperand!) }
+				if wasLastActionABinaryOperation { currentOperandSegment = formatForDisplay(lastOperand) }
 			}
 			
 			equationHistory += currentOperandSegment
