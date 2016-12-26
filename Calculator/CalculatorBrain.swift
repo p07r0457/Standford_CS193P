@@ -14,8 +14,8 @@ class CalculatorBrain {
 		"π" : Operation.Constant(M_PI),
 		"e" : Operation.Constant(M_E),
 		"√" : Operation.UnaryOperation(sqrt),
-		"x²" : Operation.UnaryOperation({ $0*$0 }),
-		"x³" : Operation.UnaryOperation({ $0*$0*$0 }),
+		"x²" : Operation.UnaryOperation({ $0 * $0 }),
+		"x³" : Operation.UnaryOperation({ $0 * $0 * $0 }),
 		"sin" : Operation.UnaryOperation(sin),
 		"cos" : Operation.UnaryOperation(cos),
 		"tan" : Operation.UnaryOperation(tan),
@@ -34,14 +34,14 @@ class CalculatorBrain {
 		case Equals
 	}
 	
-	private var accumulator = 0.0
+	private var accumulator: Double = 0
 	private var equationHistory = String()
 	private var lastOperand: Double?
 	private var currentOperandSegment = String()
 	private var isLastActionABinaryOperation = false
 	
 	func clear() {
-		accumulator = 0.0
+		accumulator = 0
 		pending = nil
 		equationHistory = String()
 		currentOperandSegment = String()
