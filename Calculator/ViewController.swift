@@ -61,6 +61,16 @@ class ViewController: UIViewController {
 		historyValue = String()
 	}
 	
+	@IBAction func backspace(_ sender: UIButton) {
+		var value = display.text!
+		
+		let index = value.index(value.startIndex, offsetBy: value.characters.count - 1)
+		value = value.substring(to: index)
+		
+		if value.characters.count == 0 { value = "0" }
+		display.text = value
+	}
+	
 	@IBAction private func touchDigit(_ sender: UIButton) {
 		let digit = sender.currentTitle!
 		
